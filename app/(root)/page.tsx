@@ -1,27 +1,25 @@
+import Link from "next/link";
+
 import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
-import Link from "next/link";
+import QuestionCard from "@/components/cards/QuestionCard";
 
 const questions = [
   {
     _id: "1",
-    title: "How to use Next.js and React",
-    description: "I want to learn Next.js",
+    title: "How to learn React?",
+    description: "I want to learn React, can anyone help me?",
     tags: [
-      {
-        _id: "2",
-        name: "React",
-      },
-      {
-        _id: "1",
-        name: "Next.js",
-      },
+      { _id: "1", name: "React" },
+      { _id: "2", name: "JavaScript" },
     ],
     author: {
       _id: "1",
       name: "John Doe",
+      image:
+        "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
     },
     upvotes: 10,
     answers: 5,
@@ -30,26 +28,22 @@ const questions = [
   },
   {
     _id: "2",
-    title: "How to render a component in Next.js",
-    description: "I want to learn Next.js",
+    title: "How to learn JavaScript?",
+    description: "I want to learn JavaScript, can anyone help me?",
     tags: [
-      {
-        _id: "1",
-        name: "Next.js",
-      },
-      {
-        _id: "2",
-        name: "React",
-      },
+      { _id: "1", name: "JavaScript" },
+      { _id: "2", name: "JavaScript" },
     ],
     author: {
       _id: "1",
       name: "John Doe",
+      image:
+        "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
     },
     upvotes: 10,
     answers: 5,
     views: 100,
-    createdAt: new Date(),
+    createdAt: new Date("2021-09-01"),
   },
 ];
 
@@ -57,18 +51,16 @@ interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
 }
 
-export default async function Home({ searchParams }: SearchParams) {
+const Home = async ({ searchParams }: SearchParams) => {
   const { query = "", filter = "" } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {
     const matchesQuery = question.title
       .toLowerCase()
       .includes(query.toLowerCase());
-
     const matchesFilter = filter
       ? question.tags[0].name.toLowerCase() === filter.toLowerCase()
       : true;
-
     return matchesQuery && matchesFilter;
   });
 
@@ -88,16 +80,18 @@ export default async function Home({ searchParams }: SearchParams) {
         <LocalSearch
           route="/"
           imgSrc="/icons/search.svg"
-          placeholder="Search Questions"
+          placeholder="Search questions..."
           otherClasses="flex-1"
         />
       </section>
       <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question._id}>{question.title}</h1>
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
   );
-}
+};
+
+export default Home;

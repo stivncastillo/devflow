@@ -21,6 +21,7 @@ export default [
     "prettier"
   ),
   {
+    files: ["*.ts", "*.tsx"],
     rules: {
       "no-undef": "off",
     },
