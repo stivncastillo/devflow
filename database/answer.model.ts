@@ -8,6 +8,7 @@ interface IAnswer {
   downvotes: number;
 }
 
+export interface IAnswerDoc extends IAnswer, Document {}
 const AnswerSchema = new Schema<IAnswer>(
   {
     author: { type: Schema.Types.ObjectId, required: true, ref: "User" },
