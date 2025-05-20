@@ -5,20 +5,20 @@ const isProduction = process.env.NODE_ENV === "production";
 
 const logger = pino({
   level: process.env.LOG_LEVEL || "info",
-  transport:
-    !isEdge && !isProduction
-      ? {
-          target: "pino-pretty",
-          options: {
-            colorize: true,
-            ignore: "pid,hostname",
-            translateTime: "SYS:standard",
-            worker: {
-              filename: "./node_modules/thread-stream/lib/worker.js",
-            },
-          },
-        }
-      : undefined,
+  // transport:
+  //   !isEdge && !isProduction
+  //     ? {
+  //         target: "pino-pretty",
+  //         options: {
+  //           colorize: true,
+  //           ignore: "pid,hostname",
+  //           translateTime: "SYS:standard",
+  //           worker: {
+  //             filename: "./node_modules/thread-stream/lib/worker.js",
+  //           },
+  //         },
+  //       }
+  //     : undefined,
   formatters: {
     level: (label) => ({ level: label.toUpperCase() }),
   },
